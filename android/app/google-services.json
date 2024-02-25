@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "96774609586",
+    "project_id": "se7ety-f02b3",
+    "storage_bucket": "se7ety-f02b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:96774609586:android:503ac3b487fbb88d9c07ab",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_se7ety"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByfTjJ_4lCi6qvc98bvQrWdzy3253rr5c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
