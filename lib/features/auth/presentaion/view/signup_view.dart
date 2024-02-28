@@ -150,10 +150,17 @@ class _signup_viweState extends State<signup_viwe> {
                         text: 'تسجيل دخول',
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            context.read<AuthCuibt>().registerpatient(
-                                _displayName.text,
-                                _emailController.text,
-                                _passwordController.text);
+                            if (widget.index == 0) {
+                              context.read<AuthCuibt>().registerDoctor(
+                                  _displayName.text,
+                                  _emailController.text,
+                                  _passwordController.text);
+                            } else {
+                              context.read<AuthCuibt>().registerpatient(
+                                  _displayName.text,
+                                  _emailController.text,
+                                  _passwordController.text);
+                            }
                           }
                         }),
                     const Gap(10),
