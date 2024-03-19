@@ -13,7 +13,7 @@ class LoginErorrStates extends AuthStates {
   LoginErorrStates({required this.Erorr});
 }
 
-//signup aspaiant
+//signup as paiant
 class signupLoadingStates extends AuthStates {}
 
 class signupSuccessStates extends AuthStates {}
@@ -24,7 +24,7 @@ class signupErorrStates extends AuthStates {
   signupErorrStates({required this.Erorr});
 }
 
-//upload doctor
+//upload Data  of doctor
 class UploaddataLoadingStates extends AuthStates {}
 
 class UploaddataSuccessStates extends AuthStates {}

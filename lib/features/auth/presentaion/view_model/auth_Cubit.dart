@@ -9,6 +9,19 @@ class AuthCuibt extends Cubit<AuthStates> {
 
   //login
 
+  login(String email, String password) {
+    emit(LoginLoadingStates());
+    try {
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) {
+        emit(LoginSuccessStates());
+      });
+    } catch (e) {
+      emit(LoginErorrStates(Erorr: 'حدثت مشكله في التسجيل'));
+    }
+  }
+
   //register as paitenet
 
   registerpatient(String name, String email, String password) async {
@@ -19,6 +32,7 @@ class AuthCuibt extends Cubit<AuthStates> {
         email: email,
         password: password,
       );
+      
       //User form Auth w Firestore
 
       User? user = credential.user;

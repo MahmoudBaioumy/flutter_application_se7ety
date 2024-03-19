@@ -6,6 +6,7 @@ import 'package:flutter_application_se7ety/core/utils/text_styles.dart';
 import 'package:flutter_application_se7ety/core/widget/Custom_But.dart';
 import 'package:flutter_application_se7ety/core/widget/Custom_dialogs.dart';
 import 'package:flutter_application_se7ety/features/auth/presentaion/view/login_view.dart';
+import 'package:flutter_application_se7ety/features/auth/presentaion/view/upload_view.dart';
 import 'package:flutter_application_se7ety/features/auth/presentaion/view_model/auth_Cubit.dart';
 import 'package:flutter_application_se7ety/features/auth/presentaion/view_model/auth_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +37,7 @@ class _signup_viweState extends State<signup_viwe> {
     return BlocListener<AuthCuibt, AuthStates>(
       listener: (context, state) {
         if (state is signupSuccessStates) {
-          debugPrint('Doneeeeeee');
+          pushAndRemoveUntil(context, const UploadData());
         } else if (state is signupErorrStates) {
           Navigator.pop(context);
           showErrorDialog(context, state.Erorr);
@@ -147,7 +148,7 @@ class _signup_viweState extends State<signup_viwe> {
                         height: 50,
                         background: AppColor.bluecolor,
                         radius: 25,
-                        text: 'تسجيل دخول',
+                        text: 'تسجيل حساب',
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             if (widget.index == 0) {

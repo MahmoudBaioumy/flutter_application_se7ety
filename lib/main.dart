@@ -29,7 +29,10 @@ class MainApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             scaffoldBackgroundColor: AppColor.white1color,
-            appBarTheme: AppBarTheme(backgroundColor: AppColor.greycolor),
+            appBarTheme: AppBarTheme(
+                titleTextStyle: getTitelstyle(color: AppColor.white1color),
+                backgroundColor: AppColor.bluecolor,
+                centerTitle: true),
             inputDecorationTheme: InputDecorationTheme(
               hintStyle: getBodystyle(),
               fillColor: AppColor.white2color,

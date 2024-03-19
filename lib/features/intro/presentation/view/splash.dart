@@ -1,10 +1,7 @@
-import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_se7ety/core/function/routing.dart';
 import 'package:flutter_application_se7ety/features/intro/presentation/view/onboarding.dart';
-import 'package:flutter_application_se7ety/features/intro/presentation/view/welcome_view.dart';
+import 'package:flutter_application_se7ety/features/patient/Home/presentaion/nav_par.dart';
 
 class SlpashView extends StatefulWidget {
   const SlpashView({super.key});
@@ -20,16 +17,16 @@ class _SlpashViewState extends State<SlpashView> {
   }
 
   @override
-    void initState() {
+  void initState() {
     super.initState();
     _getUser();
     Future.delayed(
       const Duration(seconds: 4),
       () {
-        // Navigator.of(context).pushReplacement(MaterialPageRoute(
-        //   builder: (context) =>
-        //      (user != null) ? const PatientMainPage() : const welcome_page(),
-        // ));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) =>
+              (user != null) ? const PatientMainPage() : const OnboardingView(),
+        ));
       },
     );
   }

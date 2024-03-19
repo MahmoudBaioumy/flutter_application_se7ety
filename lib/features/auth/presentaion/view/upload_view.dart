@@ -11,10 +11,11 @@ import 'package:flutter_application_se7ety/features/auth/Data/doctor_model.dart'
 import 'package:flutter_application_se7ety/features/auth/Data/specialization.dart';
 import 'package:flutter_application_se7ety/features/auth/presentaion/view_model/auth_Cubit.dart';
 import 'package:flutter_application_se7ety/features/auth/presentaion/view_model/auth_states.dart';
+import 'package:flutter_application_se7ety/features/patient/Home/presentaion/nav_par.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-
 
 class UploadData extends StatefulWidget {
   const UploadData({super.key});
@@ -54,7 +55,7 @@ class _UploadDataState extends State<UploadData> {
 
   // 1) instance from FirebaseStorage with bucket Url..
   final FirebaseStorage _storage =
-      FirebaseStorage.instanceFor(bucket: 'gs://se7ety-1ae1c.appspot.com');
+      FirebaseStorage.instanceFor(bucket: 'gs://se7ety-f02b3.appspot.com');
 
   // method to upload and get link of image
   Future<String> uploadImageToFireStore(File image) async {
@@ -77,9 +78,7 @@ class _UploadDataState extends State<UploadData> {
     if (pickedFile != null) {
       setState(() {
         _imagePath = pickedFile.path;
-
         // to upload the file (image) to firebase storage
-
         file = File(pickedFile.path);
       });
     }
@@ -90,8 +89,8 @@ class _UploadDataState extends State<UploadData> {
   Widget build(BuildContext context) {
     return BlocListener<AuthCuibt, AuthStates>(
       listener: (context, state) {
-        if (state is UploaddataLoadingStates) {
-        //  pushAndRemoveUntil(context, const PatientMainPage());
+        if (state is UploaddataSuccessStates) {
+          pushAndRemoveUntil(context, const PatientMainPage());
         } else if (state is UploaddataErorrStates) {
           Navigator.pop(context);
           showErrorDialog(context, state.Erorr);
@@ -101,7 +100,12 @@ class _UploadDataState extends State<UploadData> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('إكمال عملية التسجيل'),
+          backgroundColor: AppColor.bluecolor,
+          title: Text(
+            'إكمال عملية التسجيل',
+            style: getTitelstyle(color: AppColor.white1color),
+          ),
+          centerTitle: true,
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -149,7 +153,7 @@ class _UploadDataState extends State<UploadData> {
                           children: [
                             Text(
                               'التخصص',
-                              style: getBodystyle(color:  AppColor.blackcolor,),
+                              style: getBodystyle(color: AppColor.blackcolor),
                             )
                           ],
                         ),
@@ -185,7 +189,7 @@ class _UploadDataState extends State<UploadData> {
                           children: [
                             Text(
                               'نبذة تعريفية',
-                              style: getBodystyle(color:  AppColor.blackcolor,),
+                              style: getBodystyle(color: AppColor.blackcolor),
                             )
                           ],
                         ),
@@ -194,10 +198,11 @@ class _UploadDataState extends State<UploadData> {
                         keyboardType: TextInputType.text,
                         maxLines: 5,
                         controller: _bio,
-                        style: TextStyle(color:  AppColor.blackcolor,),
-                        decoration: const InputDecoration(
+                        style: TextStyle(color: AppColor.blackcolor),
+                        decoration: InputDecoration(
                             hintText:
-                                'سجل المعلومات الطبية العامة مثل تعليمك الأكاديمي وخبراتك السابقة...'),
+                                'سجل المعلومات الطبية العامة مثل تعليمك الأكاديمي وخبراتك السابقة...',
+                            hintStyle: getsmallstyle()),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'من فضلك ادخل النبذة التعريفية';
@@ -216,7 +221,7 @@ class _UploadDataState extends State<UploadData> {
                           children: [
                             Text(
                               'عنوان العيادة',
-                              style: getBodystyle(color:  AppColor.blackcolor,),
+                              style: getBodystyle(color: AppColor.blackcolor),
                             )
                           ],
                         ),
@@ -224,10 +229,10 @@ class _UploadDataState extends State<UploadData> {
                       TextFormField(
                         keyboardType: TextInputType.text,
                         controller: _address,
-                        style: TextStyle(color: AppColor.blackcolor,),
-                        decoration: const InputDecoration(
-                          hintText: '5 شارع مصدق - الدقي - الجيزة',
-                        ),
+                        style: TextStyle(color: AppColor.blackcolor),
+                        decoration: InputDecoration(
+                            hintText: '5 شارع مصدق - الدقي - الجيزة',
+                            hintStyle: getsmallstyle()),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'من فضلك ادخل عنوان العيادة';
@@ -245,7 +250,8 @@ class _UploadDataState extends State<UploadData> {
                                 children: [
                                   Text(
                                     'ساعات العمل من',
-                                    style: getBodystyle(color:  AppColor.blackcolor,),
+                                    style: getBodystyle(
+                                        color: AppColor.blackcolor),
                                   )
                                 ],
                               ),
@@ -258,7 +264,8 @@ class _UploadDataState extends State<UploadData> {
                                 children: [
                                   Text(
                                     'الي',
-                                    style: getBodystyle(color: AppColor.blackcolor,),
+                                    style: getBodystyle(
+                                        color: AppColor.blackcolor),
                                   )
                                 ],
                               ),
@@ -285,9 +292,7 @@ class _UploadDataState extends State<UploadData> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
+                          const Gap(10),
 
                           // ---------- End Time ----------------
                           Expanded(
@@ -314,7 +319,7 @@ class _UploadDataState extends State<UploadData> {
                           children: [
                             Text(
                               'رقم الهاتف 1',
-                              style: getBodystyle(color:  AppColor.blackcolor),
+                              style: getBodystyle(color: AppColor.blackcolor),
                             )
                           ],
                         ),
@@ -322,10 +327,10 @@ class _UploadDataState extends State<UploadData> {
                       TextFormField(
                         keyboardType: TextInputType.text,
                         controller: _phone1,
-                        style: TextStyle(color:  AppColor.blackcolor),
-                        decoration: const InputDecoration(
-                          hintText: '+20xxxxxxxxxx',
-                        ),
+                        style: TextStyle(color: AppColor.blackcolor),
+                        decoration: InputDecoration(
+                            hintText: '+20xxxxxxxxxx',
+                            hintStyle: getsmallstyle()),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'من فضلك ادخل الرقم';
@@ -349,9 +354,9 @@ class _UploadDataState extends State<UploadData> {
                         keyboardType: TextInputType.text,
                         controller: _phone2,
                         style: TextStyle(color: AppColor.blackcolor),
-                        decoration: const InputDecoration(
-                          hintText: '+20xxxxxxxxxx',
-                        ),
+                        decoration: InputDecoration(
+                            hintText: '+20xxxxxxxxxx',
+                            hintStyle: getsmallstyle()),
                       ),
                     ],
                   ),
@@ -379,8 +384,8 @@ class _UploadDataState extends State<UploadData> {
                       phone1: _phone1.text,
                       phone2: _phone2.text,
                       bio: _bio.text,
-                      openHour: int.parse(_startTime),
-                      closeHour: int.parse(_endTime),
+                      openHour: _startTime,
+                      closeHour: _endTime,
                       address: _address.text));
                 }
               },
