@@ -103,7 +103,7 @@ class _PatientProfileState extends State<PatientProfile> {
         child: StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection('patient')
-                .doc(UserID)
+                .doc(user?.uid)
                 .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
@@ -151,10 +151,10 @@ class _PatientProfileState extends State<PatientProfile> {
                                     radius: 15,
                                     backgroundColor: Theme.of(context)
                                         .scaffoldBackgroundColor,
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.camera_alt_rounded,
                                       size: 20,
-                                      // color: AppColors.color1,
+                                      color: AppColor.bluecolor,
                                     ),
                                   ),
                                 ),
