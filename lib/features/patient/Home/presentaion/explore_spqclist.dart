@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_se7ety/core/utils/AppColor.dart';
 import 'package:flutter_application_se7ety/core/utils/text_styles.dart';
 import 'package:flutter_application_se7ety/core/widget/doctor_Card.dart';
 import 'package:flutter_application_se7ety/features/auth/Data/doctor_model.dart';
@@ -22,6 +23,14 @@ class _ExploreListState extends State<ExploreList> {
         title: Text(
           widget.specialization,
         ),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back,
+              color: AppColor.white1color,
+            )),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance

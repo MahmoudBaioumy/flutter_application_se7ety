@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_se7ety/core/utils/AppColor.dart';
 import 'package:flutter_application_se7ety/core/utils/text_styles.dart';
@@ -50,7 +49,7 @@ class _MyAppointmentListState extends State<MyAppointmentList> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return CupertinoAlertDialog(
+        return AlertDialog(
           title: const Text("حذف الحجز"),
           content: const Text("هل متاكد من حذف هذا الحجز ؟"),
           actions: [
@@ -118,8 +117,10 @@ class _MyAppointmentListState extends State<MyAppointmentList> {
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Center(
+              child: CircularProgressIndicator(
+                color: AppColor.bluecolor,
+              ),
             );
           }
           return snapshot.data?.size == 0
@@ -150,6 +151,7 @@ class _MyAppointmentListState extends State<MyAppointmentList> {
                           )
                         ],
                       ),
+                      ///////////create مواعيد الحجز//////////////////////////////////////////////
                       child: ExpansionTile(
                         childrenPadding: const EdgeInsets.symmetric(
                           vertical: 10,
@@ -229,7 +231,7 @@ class _MyAppointmentListState extends State<MyAppointmentList> {
                                 Row(
                                   children: [
                                     Icon(Icons.location_on_rounded,
-                                        color:AppColor.bluecolor, size: 16),
+                                        color: AppColor.bluecolor, size: 16),
                                     const SizedBox(
                                       width: 10,
                                     ),

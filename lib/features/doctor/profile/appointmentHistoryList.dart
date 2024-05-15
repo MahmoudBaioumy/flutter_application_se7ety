@@ -6,14 +6,15 @@ import 'package:flutter_application_se7ety/core/utils/AppColor.dart';
 import 'package:flutter_application_se7ety/core/utils/text_styles.dart';
 import 'package:intl/intl.dart';
 
-class AppointmentHistoryList extends StatefulWidget {
-  const AppointmentHistoryList({super.key});
+class Appointment_HistoryList extends StatefulWidget {
+  const Appointment_HistoryList({super.key});
 
   @override
-  _AppointmentHistoryListState createState() => _AppointmentHistoryListState();
+  _Appointment_HistoryListState createState() =>
+      _Appointment_HistoryListState();
 }
 
-class _AppointmentHistoryListState extends State<AppointmentHistoryList> {
+class _Appointment_HistoryListState extends State<Appointment_HistoryList> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? user;
   String? _documentID;
@@ -110,7 +111,7 @@ class _AppointmentHistoryListState extends State<AppointmentHistoryList> {
         stream: FirebaseFirestore.instance
             .collection('appointments')
             .doc('appointments')
-            .collection('pending')
+            .collection('all')
             .where('patientID', isEqualTo: '${user!.email}')
             .orderBy('date', descending: true)
             .snapshots(),
@@ -137,7 +138,10 @@ class _AppointmentHistoryListState extends State<AppointmentHistoryList> {
                   itemCount: snapshot.data?.size,
                   itemBuilder: (context, index) {
                     DocumentSnapshot document = snapshot.data!.docs[index];
-
+                    print(_compareDate(document['date'].toDate().toString()));
+                    if (_checkDiff(document['date'].toDate())) {
+                      deleteAppointment(document.id);
+                    }
                     return Column(
                       children: [
                         const SizedBox(
@@ -148,7 +152,7 @@ class _AppointmentHistoryListState extends State<AppointmentHistoryList> {
                               left: 10, right: 10, top: 0),
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            color: AppColor.white2color,
+                            color: Colors.grey[200],
                             borderRadius: BorderRadius.circular(15),
                             boxShadow: [
                               BoxShadow(
@@ -166,8 +170,8 @@ class _AppointmentHistoryListState extends State<AppointmentHistoryList> {
                               ),
                               expandedCrossAxisAlignment:
                                   CrossAxisAlignment.end,
-                              backgroundColor: AppColor.white2color,
-                              collapsedBackgroundColor: AppColor.white2color,
+                              backgroundColor: Colors.grey[200],
+                              collapsedBackgroundColor: AppColor.blackcolor,
                               title: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -250,12 +254,6 @@ class _AppointmentHistoryListState extends State<AppointmentHistoryList> {
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      // Text(
-                                      //   "اسم المستشفي: " + document['hospital'],
-                                      // ),
-                                      // const SizedBox(
-                                      //   height: 10,
-                                      // ),
                                       Row(
                                         children: [
                                           Icon(Icons.location_on_rounded,
@@ -282,11 +280,7 @@ class _AppointmentHistoryListState extends State<AppointmentHistoryList> {
                                               showAlertDialog(context);
                                               deleteAppointment(_documentID!);
                                             },
-                                            child: Text(
-                                              'حذف الحجز',
-                                              style: getBodystyle(
-                                                  color: AppColor.white1color),
-                                            )),
+                                            child: const Text('حذف الحجز')),
                                       ),
                                     ],
                                   ),

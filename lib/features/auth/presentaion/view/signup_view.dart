@@ -9,6 +9,7 @@ import 'package:flutter_application_se7ety/features/auth/presentaion/view/login_
 import 'package:flutter_application_se7ety/features/auth/presentaion/view/upload_view.dart';
 import 'package:flutter_application_se7ety/features/auth/presentaion/view_model/auth_Cubit.dart';
 import 'package:flutter_application_se7ety/features/auth/presentaion/view_model/auth_states.dart';
+import 'package:flutter_application_se7ety/features/patient/Home/presentaion/nav_par.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
@@ -37,7 +38,9 @@ class _signup_viweState extends State<signup_viwe> {
     return BlocListener<AuthCuibt, AuthStates>(
       listener: (context, state) {
         if (state is signupSuccessStates) {
-          pushAndRemoveUntil(context, const UploadData());
+          widget.index == 0
+              ? pushAndRemoveUntil(context, UploadData())
+              : pushAndRemoveUntil(context, PatientMainPage());
         } else if (state is signupErorrStates) {
           Navigator.pop(context);
           showErrorDialog(context, state.Erorr);
@@ -176,7 +179,7 @@ class _signup_viweState extends State<signup_viwe> {
                           TextButton(
                               onPressed: () {
                                 pushwithReplacement(
-                                    context, login_view(index: widget.index));
+                                    context, LoginView(index: widget.index));
                               },
                               child: Text(
                                 'سجل دخول',

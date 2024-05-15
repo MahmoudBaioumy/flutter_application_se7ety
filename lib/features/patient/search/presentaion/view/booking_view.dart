@@ -14,8 +14,7 @@ import 'package:intl/intl.dart';
 class BookingView extends StatefulWidget {
   final DoctorModel doctor;
 
-  const BookingView(
-     {
+  const BookingView({
     super.key,
     required this.doctor,
   });
@@ -296,10 +295,9 @@ class _BookingViewState extends State<BookingView> {
                           ),
                           selected: isSelected.contains(i),
                           onSelected: (selected) {
+                            isSelected.clear();
                             setState(() {
-                              isSelected.contains(i)
-                                  ? isSelected.remove(i)
-                                  : isSelected.add(i);
+                              isSelected.add(i);
                               // to add 0 before hours < 10 (9:00  ===> 09:00)
                               date_Time =
                                   '${(times[i] < 10) ? '0' : ''}${times[i].toString()}:00';
@@ -320,6 +318,7 @@ class _BookingViewState extends State<BookingView> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(12),
         child: CustomButton(
+          background: AppColor.bluecolor,
           text: 'تأكيد الحجز',
           onPressed: () {
             if (_formKey.currentState!.validate() && isSelected != -1) {

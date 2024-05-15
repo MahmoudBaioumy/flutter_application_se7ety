@@ -150,7 +150,7 @@ class _HomePageState extends State<PatientHomePage> {
               // ----------------  SpecialistsWidget --------------------,
 
               const SpecialistsBanner(),
-              Gap(10),
+              const Gap(10),
 
               // ----------------  Top Rated --------------------,
               Text(

@@ -3,15 +3,18 @@ class AuthStates {}
 class AuthinitStates extends AuthStates {}
 
 //login
-class LoginLoadingStates extends AuthStates {}
+class LoginLoadingState extends AuthStates {}
 
-class LoginSuccessStates extends AuthStates {}
+class LoginSuccessState extends AuthStates {
+ 
+}
 
 class LoginErorrStates extends AuthStates {
   final String Erorr;
 
   LoginErorrStates({required this.Erorr});
 }
+
 
 //signup as paiant
 class signupLoadingStates extends AuthStates {}

@@ -71,7 +71,7 @@ class _welcome_oageState extends State<welcome_page> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              push(context, const login_view(index: 0));
+                              push(context, const LoginView(index: 0));
                             },
                             child: Container(
                               height: 70,
@@ -91,7 +91,7 @@ class _welcome_oageState extends State<welcome_page> {
                           const Gap(10),
                           GestureDetector(
                             onTap: () {
-                              push(context, const login_view(index: 1));
+                              push(context, const LoginView(index: 1));
                             },
                             child: Container(
                               height: 70,

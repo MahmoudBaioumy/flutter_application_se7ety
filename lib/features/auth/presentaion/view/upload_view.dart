@@ -11,7 +11,7 @@ import 'package:flutter_application_se7ety/features/auth/Data/doctor_model.dart'
 import 'package:flutter_application_se7ety/features/auth/Data/specialization.dart';
 import 'package:flutter_application_se7ety/features/auth/presentaion/view_model/auth_Cubit.dart';
 import 'package:flutter_application_se7ety/features/auth/presentaion/view_model/auth_states.dart';
-import 'package:flutter_application_se7ety/features/patient/Home/presentaion/nav_par.dart';
+import 'package:flutter_application_se7ety/features/doctor/nav_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
@@ -90,7 +90,7 @@ class _UploadDataState extends State<UploadData> {
     return BlocListener<AuthCuibt, AuthStates>(
       listener: (context, state) {
         if (state is UploaddataSuccessStates) {
-          pushAndRemoveUntil(context, const PatientMainPage());
+          pushAndRemoveUntil(context, const DoctorNavBar());
         } else if (state is UploaddataErorrStates) {
           Navigator.pop(context);
           showErrorDialog(context, state.Erorr);
@@ -387,6 +387,7 @@ class _UploadDataState extends State<UploadData> {
                       openHour: _startTime,
                       closeHour: _endTime,
                       address: _address.text));
+                  pushAndRemoveUntil(context, const DoctorNavBar());
                 }
               },
               style: ElevatedButton.styleFrom(

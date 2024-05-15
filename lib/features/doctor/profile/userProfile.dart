@@ -6,20 +6,18 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_se7ety/core/utils/AppColor.dart';
 import 'package:flutter_application_se7ety/core/utils/text_styles.dart';
-import 'package:flutter_application_se7ety/core/widget/Custom_But.dart';
 import 'package:flutter_application_se7ety/core/widget/tile_widget.dart';
-import 'package:flutter_application_se7ety/features/patient/profile/appointments/appointmentHistoryList.dart';
-import 'package:flutter_application_se7ety/features/patient/profile/view/userSettings.dart';
+import 'package:flutter_application_se7ety/features/doctor/profile/userSettings.dart';
 import 'package:image_picker/image_picker.dart';
 
-class PatientProfile extends StatefulWidget {
-  const PatientProfile({super.key});
+class DoctorProfileView extends StatefulWidget {
+  const DoctorProfileView({super.key});
 
   @override
   _PatientProfileState createState() => _PatientProfileState();
 }
 
-class _PatientProfileState extends State<PatientProfile> {
+class _PatientProfileState extends State<DoctorProfileView> {
   String? _imagePath;
   File? file;
   String? profileUrl;
@@ -34,7 +32,7 @@ class _PatientProfileState extends State<PatientProfile> {
     Reference ref =
         FirebaseStorage.instanceFor(bucket: 'gs://se7ety-f02b3.appspot.com')
             .ref()
-            .child('patient/${FirebaseAuth.instance.currentUser!.uid}');
+            .child('doctor/${FirebaseAuth.instance.currentUser!.uid}');
     SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
     await ref.putFile(image, metadata);
     String url = await ref.getDownloadURL();
@@ -53,8 +51,8 @@ class _PatientProfileState extends State<PatientProfile> {
       });
     }
     profileUrl = await uploadImageToFireStore(file!, 'doc');
-    FirebaseFirestore.instance.collection('patient').doc(userId).set({
-      'iamge': profileUrl,
+    FirebaseFirestore.instance.collection('doctor').doc(userId).set({
+      'image': profileUrl,
     }, SetOptions(merge: true));
   }
 
@@ -84,8 +82,10 @@ class _PatientProfileState extends State<PatientProfile> {
               color: AppColor.white1color,
             ),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (contex) => const UserSettings()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (contex) => const User_Settings()));
             },
           ),
         ],
@@ -93,7 +93,7 @@ class _PatientProfileState extends State<PatientProfile> {
       body: SafeArea(
         child: StreamBuilder(
             stream: FirebaseFirestore.instance
-                .collection('patient')
+                .collection('doctor')
                 .doc(userId)
                 .snapshots(),
             builder: (context, snapshot) {
@@ -124,8 +124,8 @@ class _PatientProfileState extends State<PatientProfile> {
                                   child: CircleAvatar(
                                     backgroundColor: AppColor.white1color,
                                     radius: 60,
-                                    backgroundImage: (userData?['iamge'] != '')
-                                        ? NetworkImage(userData?['iamge'])
+                                    backgroundImage: (userData?['image'] != '')
+                                        ? NetworkImage(userData?['image'])
                                         : (_imagePath != null)
                                             ? FileImage(File(_imagePath!))
                                                 as ImageProvider
@@ -167,18 +167,12 @@ class _PatientProfileState extends State<PatientProfile> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  (userData['city'] == '')
-                                      ? CustomButton(
-                                          text: 'تعديل الحساب',
-                                          height: 40,
-                                          onPressed: () {},
-                                        )
-                                      : Text(
-                                          userData['city'],
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: getBodystyle(),
-                                        ),
+                                  Text(
+                                    userData['specialization'],
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: getBodystyle(),
+                                  ),
                                   const SizedBox(
                                     height: 15,
                                   ),
@@ -220,7 +214,7 @@ class _PatientProfileState extends State<PatientProfile> {
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: AppColor.white2color,
+                            color: Colors.grey[200],
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -232,10 +226,7 @@ class _PatientProfileState extends State<PatientProfile> {
                                 height: 15,
                               ),
                               TileWidget(
-                                  text: userData['phone'] == ''
-                                      ? 'لم تضاف'
-                                      : userData['phone'],
-                                  icon: Icons.call),
+                                  text: userData['phone1'], icon: Icons.call),
                             ],
                           ),
                         ),
@@ -243,11 +234,28 @@ class _PatientProfileState extends State<PatientProfile> {
                         const SizedBox(
                           height: 20,
                         ),
-                        Text(
-                          "حجوزاتي",
-                          style: getBodystyle(fontWeight: FontWeight.w600),
+                        Container(
+                          padding: const EdgeInsets.all(15),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.grey[200],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              TileWidget(
+                                  text:
+                                      '${userData['openHour']}:00 - ${userData['closeHour']}:00',
+                                  icon: Icons.email),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              TileWidget(
+                                  text: userData['phone1'], icon: Icons.call),
+                            ],
+                          ),
                         ),
-                        const AppointmentHistoryList()
                       ],
                     )),
               );
